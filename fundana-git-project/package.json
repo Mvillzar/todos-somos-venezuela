@@ -1,0 +1,12 @@
+{
+  "name": "fundana-todos-somos-venezuela",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Landing de donacion Fundana + lectura automatica del total recaudado en GoFundMe (headless render + Netlify Blobs).",
+  "dependencies": {
+    "@netlify/blobs": "^8.1.0",
+    "@sparticuz/chromium": "123.0.1",
+    "puppeteer-core": "22.6.5"
+  }
+}

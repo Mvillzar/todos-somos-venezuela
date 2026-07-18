@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Todos Somos Venezuela | Respuesta a la emergencia — Fundana</title>
+<meta name="description" content="Tras el sismo en Venezuela, Fundana activó una respuesta humanitaria para proteger a niños y familias. Tu donación sostiene atención psicosocial, protección infantil, alimentación e higiene.">
+
+<!--
+  ============================================================================
+  FUNDANA · TODOS SOMOS VENEZUELA — SECCIÓN DE DONACIÓN (EMBED IFRAME WIX)
+  ============================================================================
+
+  1) CÓMO INCRUSTAR EN WIX
+  --------------------------------------------------------------------------
+     • Agregar elemento "Embed / HTML iframe" (Embed Code → Embed HTML) en la
+       página interna, a ancho completo.
+     • Pegar TODO este archivo en modo "Code".
+     • Estirar el elemento al ancho de la sección. El ALTO se ajusta solo
+       (ver punto 2). No hace falta calcularlo a mano.
+
+  2) AUTO-AJUSTE DE ALTURA (evita el scroll interno del iframe)
+  --------------------------------------------------------------------------
+     Este HTML envía su altura real al contenedor con postMessage.
+     Para que Wix la aplique, pegá esto en el CÓDIGO DE LA PÁGINA (Velo/Dev Mode):
+
+       import wixWindow from 'wix-window';
+       $w.onReady(() => {
+         $w('#html1').onMessage((e) => {           // usar el ID real del embed
+           if (e.data && e.data.type === 'fundana-height') {
+             $w('#html1').height = e.data.height;
+           }
+         });
+       });
+
+     Si NO usás Velo: dejá el elemento con alto fijo y activá scroll — funciona
+     igual, solo que con scroll interno. La opción Velo es la recomendada.
+
+  3) CIFRAS DE LA CAMPAÑA
+  --------------------------------------------------------------------------
+     Editar el objeto CAMPAIGN al inicio del <script> (raised / goal / donors /
+     updated). Barra, % y contadores se recalculan solos.
+     ⚑ Para total SIEMPRE en vivo: reemplazar el bloque de progreso por el
+       widget oficial de GoFundMe (embed.js).
+
+  4) IMÁGENES
+  --------------------------------------------------------------------------
+     Estas son de Pexels (licencia libre, uso comercial, sin atribución
+     obligatoria). RECOMENDADO para producción: descargarlas y subirlas a
+     Wix Media, y reemplazar las URLs de images.pexels.com por las de Wix
+     (más rápido y sin riesgo de que un hotlink externo se caiga).
+     ▸ Lo IDEAL sería usar las fotos reales de Fundana en terreno: convierten
+       más y no tienen problema de derechos por ser propias.
+
+  5) CANALES DE DONACIÓN (sección "Más formas de donar")
+  --------------------------------------------------------------------------
+     Datos tomados de la página oficial de la campaña (Zelle, Venmo, PayPal
+     y transferencias VE/exterior). Cada dato tiene botón de "Copiar".
+     Verificar que sigan vigentes antes de publicar.
+
+  6) PENDIENTE DE CONTENIDO
+  --------------------------------------------------------------------------
+     • Testimonio real del sismo (con consentimiento).
+     • Validar montos $10/$25/$50.
+  ============================================================================
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black:#1A1A1C; --ink:#49484a; --ink-soft:#6E6D70;
+    --orange:#e96c26; --orange-deep:#d4432a; --orange-mid:#e8641f; --amber:#f1a627;
+    --grad:linear-gradient(115deg,#d4432a 0%,#e96c26 55%,#f1a627 100%);
+    --grad-soft:linear-gradient(115deg,#e96c26 0%,#f1a627 100%);
+    --bg:#FAF6F0; --bg-alt:#F1EAE0; --paper:#FFFFFF;
+    --line:rgba(26,26,28,0.12); --radius:6px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{background:var(--bg);color:var(--black);font-family:'Inter',sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden;width:100%;max-width:100%;}
+  img,svg,video{max-width:100%;}
+  h1,h2,h3,h4{font-family:'Montserrat',sans-serif;font-weight:800;line-height:1.08;letter-spacing:-0.02em;}
+  .eyebrow{font-family:'Montserrat',sans-serif;font-size:0.74rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--orange);}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 clamp(16px,4vw,32px);width:100%;}
+  a{color:inherit;text-decoration:none;}
+  img{display:block;width:100%;height:100%;object-fit:cover;}
+  :focus-visible{outline:3px solid var(--orange);outline-offset:2px;border-radius:3px;}
+  section{scroll-margin-top:84px;}
+  .donate-wrap{scroll-margin-top:84px;}
+
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 26px;border-radius:var(--radius);font-family:'Montserrat',sans-serif;font-size:0.88rem;font-weight:700;cursor:pointer;border:2px solid transparent;transition:transform .15s ease,box-shadow .15s ease;white-space:nowrap;letter-spacing:0.01em;min-height:48px;}
+  .btn:hover{transform:translateY(-2px);}
+  .btn-primary{background:var(--grad);color:#fff;}
+  .btn-primary:hover{box-shadow:0 10px 24px rgba(233,108,38,0.4);}
+  .btn-ghost{border-color:#fff;color:#fff;background:transparent;}
+  .btn-ghost:hover{background:#fff;color:var(--black);}
+  .btn-outline{border-color:var(--black);color:var(--black);background:transparent;}
+  .btn-outline:hover{background:var(--black);color:#fff;}
+  .btn-sm{padding:11px 20px;font-size:0.8rem;min-height:44px;}
+  .btn-lg{padding:17px 32px;font-size:0.95rem;}
+
+  /* TOPBAR (no sticky — embed friendly) */
+  /* PROPOSAL BAR */
+  .proposal-bar{background:#1A1A1C;color:rgba(255,255,255,0.6);font-family:'Montserrat',sans-serif;font-size:0.78rem;}
+  .proposal-bar.hidden{display:none;}
+  .proposal-inner{max-width:1160px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:11px clamp(16px,4vw,32px);}
+  .pb-text{display:flex;align-items:center;gap:10px;letter-spacing:0.01em;flex:1;min-width:0;}
+  .pb-dot{width:8px;height:8px;background:var(--amber);flex-shrink:0;}
+  .pb-text strong{color:#fff;font-weight:700;flex-shrink:0;}
+  .pb-text .pb-muted{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;}
+  .pb-close{width:30px;height:26px;border:1px solid rgba(255,255,255,0.28);border-radius:5px;background:transparent;color:rgba(255,255,255,0.7);font-size:1rem;line-height:1;cursor:pointer;flex-shrink:0;transition:background .15s,color .15s,border-color .15s;display:flex;align-items:center;justify-content:center;}
+  .pb-close:hover{background:rgba(255,255,255,0.1);color:#fff;border-color:rgba(255,255,255,0.5);}
+  @media (max-width:520px){.pb-text{font-size:0.7rem;gap:8px;}}
+
+  /* HEADER */
+  .site-header{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);transition:box-shadow .2s;}
+  .site-header.scrolled{box-shadow:0 6px 20px rgba(26,26,28,0.08);}
+  .header-row{display:flex;align-items:center;gap:12px;max-width:1160px;margin:0 auto;padding:12px clamp(16px,4vw,32px);}
+  .brand{display:flex;align-items:center;flex-shrink:0;}
+  .brand-logo{height:38px;width:auto;display:block;}
+  .nav-desktop{display:flex;gap:30px;margin-left:auto;}
+  .nav-link{font-family:'Montserrat',sans-serif;font-weight:600;font-size:0.88rem;color:var(--ink);position:relative;padding:6px 0;transition:color .15s;background:none;border:none;cursor:pointer;}
+  .nav-link:hover,.nav-link.active{color:var(--orange);}
+  .nav-link::after{content:'';position:absolute;left:0;bottom:0;width:0;height:2px;background:var(--grad);transition:width .2s;}
+  .nav-link:hover::after,.nav-link.active::after{width:100%;}
+  .header-actions{display:flex;align-items:center;gap:12px;margin-left:24px;}
+  .nav-toggle{display:none;flex-direction:column;justify-content:center;gap:5px;width:44px;height:44px;border:none;background:transparent;cursor:pointer;padding:9px;flex-shrink:0;}
+  .nav-toggle span{display:block;height:2.5px;width:100%;background:var(--black);border-radius:2px;transition:transform .25s,opacity .2s;}
+  .nav-toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(7.5px) rotate(45deg);}
+  .nav-toggle[aria-expanded="true"] span:nth-child(2){opacity:0;}
+  .nav-toggle[aria-expanded="true"] span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg);}
+  .nav-mobile{display:none;flex-direction:column;padding:4px clamp(20px,4vw,32px) 20px;border-top:1px solid var(--line);}
+  .nav-mobile.open{display:flex;}
+  .nav-mobile .nav-link{padding:15px 2px;border-bottom:1px solid var(--line);font-size:1rem;text-align:left;width:100%;}
+  .nav-mobile .nav-link::after{display:none;}
+  .nav-mobile .btn{margin-top:16px;width:100%;}
+  @media (max-width:860px){
+    .nav-desktop{display:none;}
+    .nav-toggle{display:flex;}
+    .header-actions{margin-left:auto;}
+  }
+  @media (max-width:600px){
+    .header-actions .btn-primary{display:none;}
+  }
+  @media (max-width:420px){
+    .brand-logo{height:30px;}
+  }
+
+  /* HERO */
+  .hero{position:relative;overflow:hidden;min-height:560px;display:flex;align-items:center;padding:64px 0;}
+  .hero-bg{position:absolute;inset:0;z-index:0;}
+  .hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(100deg,rgba(16,16,18,0.93) 32%,rgba(16,16,18,0.6) 64%,rgba(16,16,18,0.28));}
+  .hero-accent{position:absolute;top:0;bottom:0;right:0;width:8px;background:var(--grad);z-index:2;}
+  .crack-svg{position:absolute;top:0;right:5%;width:42%;height:100%;opacity:0.5;z-index:1;pointer-events:none;}
+  .hero-inner{position:relative;z-index:3;max-width:660px;}
+  .hero .eyebrow{color:var(--amber);margin-bottom:20px;display:block;}
+  .hero h1{font-size:clamp(2.1rem,4.6vw,3.6rem);color:#fff;margin-bottom:22px;font-weight:900;}
+  .hero h1 em{font-style:normal;background:var(--grad-soft);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+  .hero p{font-size:1.06rem;color:rgba(255,255,255,0.88);max-width:520px;margin-bottom:32px;}
+  .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:32px;}
+  .trust-inline{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:'Montserrat',sans-serif;font-size:0.72rem;font-weight:600;letter-spacing:0.03em;color:rgba(255,255,255,0.8);}
+  .trust-inline .dot{width:7px;height:7px;border-radius:50%;background:var(--amber);flex-shrink:0;}
+
+  /* DONACIÓN */
+  .donate-wrap{margin-top:-60px;position:relative;z-index:20;}
+  .donate-card{background:var(--paper);border-radius:12px;box-shadow:0 24px 60px rgba(26,26,28,0.18);padding:clamp(28px,4vw,40px) clamp(24px,4vw,44px);display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(28px,4vw,44px);align-items:center;max-width:100%;}
+  .donate-card>*{min-width:0;}
+  .progress-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:6px;}
+  .raised{font-family:'Montserrat',sans-serif;font-weight:900;font-size:clamp(2rem,5vw,2.6rem);background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1;}
+  .goal{font-family:'Montserrat',sans-serif;font-weight:600;font-size:1rem;color:var(--ink-soft);}
+  .progress-track{height:12px;background:var(--bg-alt);border-radius:20px;overflow:hidden;margin:16px 0 12px;}
+  .progress-fill{height:100%;width:0;background:var(--grad);border-radius:20px;transition:width 1.4s cubic-bezier(.2,.7,.2,1);}
+  .progress-meta{display:flex;justify-content:space-between;font-size:0.86rem;color:var(--ink-soft);font-weight:500;gap:12px;flex-wrap:wrap;}
+  .progress-meta strong{color:var(--black);font-family:'Montserrat',sans-serif;font-weight:700;}
+  .updated{font-size:0.72rem;color:var(--ink-soft);margin-top:14px;font-style:italic;}
+  .donate-action h3{font-size:1.12rem;margin-bottom:14px;font-weight:800;}
+  .amounts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;}
+  .amount-chip{padding:14px 8px;border:2px solid var(--line);border-radius:var(--radius);background:var(--paper);font-family:'Montserrat',sans-serif;font-weight:800;font-size:1rem;color:var(--black);cursor:pointer;transition:all .15s ease;text-align:center;min-height:48px;}
+  .amount-chip:hover{border-color:var(--orange);}
+  .amount-chip.active{border-color:transparent;background:var(--grad);color:#fff;}
+  .donate-action .btn-primary{width:100%;}
+  .secure-note{display:flex;align-items:center;gap:7px;justify-content:center;font-size:0.74rem;color:var(--ink-soft);margin-top:12px;text-align:center;}
+  .confirm-note{font-size:0.76rem;color:var(--ink-soft);text-align:center;margin-top:10px;}
+
+  section.pad{padding:clamp(56px,8vw,84px) 0;}
+  .section-alt{background:var(--bg-alt);}
+  .section-head{max-width:660px;margin-bottom:clamp(36px,5vw,52px);}
+  .section-head h2{font-size:clamp(1.6rem,2.8vw,2.3rem);margin-top:12px;}
+  .section-head p{color:var(--ink-soft);margin-top:16px;font-size:1.02rem;}
+
+  /* CONTEXTO full width */
+  .context-band{background:var(--black);color:#fff;padding:clamp(60px,8vw,88px) 0;position:relative;overflow:hidden;}
+  .context-band::before{content:'';position:absolute;top:0;left:0;right:0;height:6px;background:var(--grad);}
+  .context-inner{max-width:900px;margin:0 auto;text-align:center;}
+  .context-band .eyebrow{color:var(--amber);}
+  .context-band h2{color:#fff;font-size:clamp(1.8rem,3.4vw,2.9rem);margin:16px 0 24px;font-weight:900;}
+  .context-band .lead{font-size:clamp(1rem,1.4vw,1.15rem);color:rgba(255,255,255,0.82);max-width:720px;margin:0 auto 12px;}
+  .context-band .lead strong{color:var(--amber);font-weight:700;}
+  .cred-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.12);margin-top:clamp(36px,5vw,56px);}
+  .cred-item{background:var(--black);padding:clamp(24px,3vw,32px) 16px;text-align:center;}
+  .cred-num{font-family:'Montserrat',sans-serif;font-weight:900;font-size:clamp(1.8rem,3vw,2.3rem);display:block;margin-bottom:8px;background:var(--grad-soft);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+  .cred-item p{font-size:0.8rem;color:rgba(255,255,255,0.7);}
+
+  /* PILARES */
+  .pillars-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+  .pillar-card{background:var(--paper);border-radius:var(--radius);overflow:hidden;box-shadow:0 4px 18px rgba(26,26,28,0.06);transition:transform .2s ease,box-shadow .2s ease;}
+  .pillar-card:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(26,26,28,0.12);}
+  .pillar-photo{height:170px;position:relative;}
+  .pillar-photo::after{content:'';position:absolute;left:0;bottom:0;width:100%;height:4px;background:var(--grad);}
+  .pillar-body{padding:24px 22px;display:flex;flex-direction:column;gap:9px;}
+  .pillar-body .tag{font-family:'Montserrat',sans-serif;font-size:0.68rem;font-weight:700;color:var(--orange);text-transform:uppercase;letter-spacing:0.08em;}
+  .pillar-body h3{font-size:1.08rem;font-weight:800;}
+  .pillar-body p{font-size:0.88rem;color:var(--ink-soft);}
+
+  /* GALERIA — mosaico editorial */
+  .gallery-grid{display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:230px;gap:12px;}
+  .g-item{position:relative;overflow:hidden;border-radius:8px;}
+  .g-item img{transition:transform .55s cubic-bezier(.2,.7,.2,1);}
+  .g-item:hover img{transform:scale(1.07);}
+  .g-item::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(16,16,18,0.72) 0%,rgba(16,16,18,0.15) 42%,rgba(16,16,18,0) 70%);pointer-events:none;}
+  .g-cap{position:absolute;left:18px;right:18px;bottom:16px;z-index:2;color:#fff;font-family:'Montserrat',sans-serif;font-weight:700;font-size:0.9rem;line-height:1.2;text-shadow:0 1px 6px rgba(0,0,0,0.5);}
+  .g-item.g1{grid-column:span 3;grid-row:span 2;}
+  .g-item.g1 .g-cap{font-size:1.2rem;}
+  .g-item.g2{grid-column:span 3;grid-row:span 1;}
+  .g-item.g3{grid-column:span 1;grid-row:span 1;}
+  .g-item.g4{grid-column:span 1;grid-row:span 1;}
+  .g-item.g5{grid-column:span 1;grid-row:span 1;}
+  .gallery-note{margin-top:20px;font-size:0.85rem;color:var(--ink-soft);font-style:italic;}
+
+  /* TESTIMONIO */
+  .testimonial{max-width:760px;margin:0 auto;text-align:center;}
+  .testimonial .qm{font-family:'Montserrat',sans-serif;font-weight:900;font-size:5rem;line-height:0.5;display:block;margin-bottom:22px;background:var(--grad-soft);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+  .testimonial blockquote{font-family:'Montserrat',sans-serif;font-weight:600;font-size:clamp(1.2rem,2.4vw,1.7rem);margin-bottom:20px;line-height:1.3;}
+  .testimonial cite{font-family:'Montserrat',sans-serif;font-size:0.76rem;font-weight:600;letter-spacing:0.04em;color:var(--ink-soft);font-style:normal;}
+
+  /* COSTO */
+  .cost-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  .cost-card{background:var(--paper);border-radius:var(--radius);padding:32px 26px;border-top:4px solid transparent;border-image:var(--grad) 1;box-shadow:0 4px 18px rgba(26,26,28,0.06);}
+  .cost-amount{font-family:'Montserrat',sans-serif;font-weight:900;font-size:2rem;margin-bottom:12px;display:block;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+  .cost-card p{font-size:0.94rem;color:var(--ink-soft);}
+
+  /* CANALES DE DONACIÓN */
+  .channels-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px;}
+  .channel-card{width:100%;text-align:left;font-family:inherit;background:var(--paper);border:1.5px solid var(--line);border-radius:12px;padding:22px 22px 18px;display:flex;flex-direction:column;gap:8px;cursor:pointer;transition:border-color .15s,transform .15s,box-shadow .15s,background .15s;box-shadow:0 4px 18px rgba(26,26,28,0.05);}
+  .channel-card:hover{border-color:var(--orange);transform:translateY(-3px);box-shadow:0 12px 28px rgba(26,26,28,0.1);}
+  .channel-card:active{transform:translateY(-1px);}
+  .channel-top{display:flex;align-items:center;justify-content:space-between;gap:10px;}
+  .channel-label{font-family:'Montserrat',sans-serif;font-weight:800;font-size:0.95rem;color:var(--orange);text-transform:uppercase;letter-spacing:0.06em;}
+  .channel-ic{width:20px;height:20px;color:var(--ink-soft);flex-shrink:0;transition:color .15s;}
+  .channel-card:hover .channel-ic{color:var(--orange);}
+  .channel-handle{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:0.92rem;color:var(--black);word-break:break-all;}
+  .channel-hint{font-family:'Montserrat',sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.03em;color:var(--ink-soft);display:flex;align-items:center;gap:6px;margin-top:2px;}
+  .channel-card.copied{border-color:var(--orange);background:linear-gradient(0deg,rgba(241,166,39,0.09),rgba(241,166,39,0.09)),var(--paper);}
+  .channel-card.copied .channel-hint{color:var(--orange-deep);}
+  .copy-mini{background:var(--bg-alt);border:none;border-radius:4px;padding:8px 14px;font-family:'Montserrat',sans-serif;font-weight:700;font-size:0.72rem;color:var(--ink);cursor:pointer;transition:background .15s ease,color .15s ease;min-height:auto;display:inline-flex;align-items:center;gap:6px;}
+  .copy-mini:hover{background:var(--amber);color:#fff;}
+  .bank-accordion{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--paper);}
+  .bank-accordion details{border-bottom:1px solid var(--line);padding:0;}
+  .bank-accordion details:last-child{border-bottom:none;}
+  .bank-accordion summary{padding:20px 24px;}
+  .bank-block{padding:0 24px 24px;}
+  .bank-block h4{font-family:'Montserrat',sans-serif;font-size:0.8rem;font-weight:800;color:var(--orange);text-transform:uppercase;letter-spacing:0.05em;margin:18px 0 10px;}
+  .bank-block dl{display:flex;flex-direction:column;gap:8px;}
+  .bank-block dl>div{display:grid;grid-template-columns:140px 1fr;gap:12px;font-size:0.88rem;align-items:baseline;}
+  .bank-block dt{color:var(--ink-soft);font-weight:600;}
+  .bank-block dd{color:var(--black);font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:0.85rem;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+  .notify-note{margin-top:24px;background:rgba(241,166,39,0.12);border-left:4px solid var(--amber);border-radius:var(--radius);padding:18px 22px;font-size:0.92rem;color:var(--ink);}
+  .notify-note strong{color:var(--black);}
+  .tax-note{margin-top:16px;font-size:0.82rem;color:var(--ink-soft);line-height:1.5;}
+
+  /* CTA BANNER */
+  .cta-banner{background:var(--grad);color:#fff;border-radius:10px;padding:clamp(36px,5vw,52px) clamp(28px,4vw,48px);display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;}
+  .cta-banner h3{color:#fff;font-size:clamp(1.3rem,2.4vw,1.6rem);font-weight:900;max-width:460px;line-height:1.15;}
+  .cta-banner .btn{background:#fff;color:var(--orange-deep);}
+  .cta-banner .btn:hover{box-shadow:0 12px 28px rgba(0,0,0,0.22);}
+  .share-row{display:flex;gap:10px;align-items:center;margin-top:16px;}
+  .share-row button{width:44px;height:44px;border:2px solid rgba(255,255,255,0.5);border-radius:50%;display:flex;align-items:center;justify-content:center;background:transparent;color:#fff;cursor:pointer;transition:background .15s ease;}
+  .share-row button:hover{background:rgba(255,255,255,0.2);}
+  .share-row svg{width:18px;height:18px;}
+
+  /* TRUST BAND */
+  .trust-band{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;padding:34px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .trust-item{display:flex;align-items:center;gap:12px;font-size:0.84rem;font-weight:500;color:var(--ink);}
+  .badge-img{width:42px;height:42px;object-fit:contain;flex-shrink:0;}
+
+  /* FAQ */
+  .faq-list{max-width:760px;}
+  details{border-bottom:1px solid var(--line);padding:22px 0;}
+  summary{cursor:pointer;font-family:'Montserrat',sans-serif;font-weight:700;font-size:1.02rem;display:flex;justify-content:space-between;align-items:center;list-style:none;gap:20px;}
+  summary::-webkit-details-marker{display:none;}
+  summary::after{content:'+';font-family:'Montserrat',sans-serif;font-weight:700;font-size:1.5rem;color:var(--orange);transition:transform .2s ease;flex-shrink:0;}
+  details[open] summary::after{transform:rotate(45deg);}
+  details p{color:var(--ink-soft);margin-top:14px;font-size:0.94rem;max-width:640px;}
+
+  .final-cta{text-align:center;padding-bottom:clamp(64px,9vw,96px);}
+  .final-cta h2{font-size:clamp(1.7rem,3.4vw,2.7rem);max-width:680px;margin:0 auto 24px;font-weight:900;}
+  .final-cta .hero-ctas{justify-content:center;}
+
+  footer{background:#0F0F11;color:rgba(255,255,255,0.5);padding:40px 0;font-size:0.8rem;}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:24px;}
+  footer .f-col a{display:block;color:rgba(255,255,255,0.6);margin-bottom:6px;}
+  footer .f-col a:hover{color:#fff;}
+  footer strong{color:#fff;display:block;margin-bottom:10px;font-family:'Montserrat',sans-serif;}
+
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--black);color:#fff;padding:12px 22px;border-radius:var(--radius);font-size:0.85rem;font-weight:600;opacity:0;pointer-events:none;transition:all .25s ease;z-index:300;}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+  @media (max-width:900px){
+    .donate-card{grid-template-columns:1fr;gap:28px;}
+  }
+  @media (max-width:760px){
+    .cred-strip{grid-template-columns:repeat(2,1fr);}
+    .pillars-grid{grid-template-columns:repeat(2,1fr);}
+    .cost-grid{grid-template-columns:1fr;}
+    .gallery-grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:150px;}
+    .g-item.g1{grid-column:span 2;grid-row:span 2;}
+    .g-item.g2{grid-column:span 2;grid-row:span 1;}
+    .g-item.g3{grid-column:span 1;grid-row:span 1;}
+    .g-item.g4{grid-column:span 1;grid-row:span 1;}
+    .g-item.g5{grid-column:span 2;grid-row:span 1;}
+    .g-item.g1 .g-cap{font-size:1.05rem;}
+    .channels-grid{grid-template-columns:1fr;}
+    .bank-block dl>div{grid-template-columns:1fr;gap:2px;}
+    .bank-block dt{font-size:0.72rem;text-transform:uppercase;letter-spacing:0.04em;}
+    .cta-banner{flex-direction:column;align-items:flex-start;}
+    .hero{min-height:auto;}
+    .donate-card{padding:26px 22px;}
+  }
+  @media (max-width:420px){
+    .amounts{grid-template-columns:repeat(2,1fr);}
+    .hero-ctas .btn{width:100%;}
+  }
+  @media (max-width:360px){
+    .cred-item{padding:18px 10px;}
+    .cred-num{font-size:1.7rem;}
+    .donate-card{padding:24px 18px;}
+    .raised{font-size:1.9rem;}
+    .pillar-body,.cost-card,.channel-card{padding-left:18px;padding-right:18px;}
+    .cta-banner{padding:32px 20px;}
+    .bank-accordion summary,.bank-block{padding-left:18px;padding-right:18px;}
+    .g-cap{left:12px;right:12px;font-size:0.82rem;}
+  }
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}.btn,.pillar-card,.progress-fill{transition:none;}}
+</style>
+</head>
+<body>
+
+<div class="proposal-bar" id="proposalBar">
+  <div class="proposal-inner">
+    <span class="pb-text"><span class="pb-dot"></span><strong>FUNDANA</strong>&nbsp;<span class="pb-muted">— Landing de Donación · Screenko SA · 2026</span></span>
+    <button class="pb-close" id="pbClose" aria-label="Cerrar aviso">&times;</button>
+  </div>
+</div>
+
+<header class="site-header" id="top">
+  <div class="header-row">
+    <a href="#top" class="brand js-scroll" aria-label="Fundana — ir al inicio">
+      <svg class="brand-logo" viewBox="0 0 3313.62 745.96" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Fundana">
+        <defs>
+          <linearGradient gradientUnits="userSpaceOnUse" y2="479.58" x2="2080.96" y1="766.29" x1="2319.87" id="fnd-g1">
+            <stop stop-color="#e96c26" offset=".11"></stop><stop stop-color="#f1a627" offset="1"></stop>
+          </linearGradient>
+          <linearGradient gradientUnits="userSpaceOnUse" y2="568.27" x2="3030.72" y1="759.34" x1="3189.94" id="fnd-g2">
+            <stop stop-color="#d4432a" offset=".11"></stop><stop stop-color="#e8641f" offset="1"></stop>
+          </linearGradient>
+        </defs>
+        <path d="M2318.99 439.42h134.95L2448.53 302h-210.14c36.85-31.01 60.49-78.88 60.49-132.6 0-93.57-71.52-169.4-159.8-169.4s-159.83 75.83-159.83 169.4c0 53.72 23.66 101.58 60.46 132.6h-218.09l.11 137.42h137.46l-186.51 306.04h216.72c28.44-95.29 90.79-151.04 149.69-151.04s121.26 55.75 149.67 151.04h216.72L2319 439.42Z" fill="url(#fnd-g1)"></path>
+        <path d="m2862.72 741.25-69.28-56.37-270.19-220.82v281.9h-75.06V301.79l75.06 61.1 270.19 220.8V299.88l75.04.64v440.81l-5.76-.07Z" fill="#49484a"></path>
+        <path d="M419.52 300.7v79.39H113.28c-20.98 0-38.36 18.42-38.36 40.66v41.27H344.6v79.41H74.32v203.91H0v-324.6c0-66.07 50.34-120.05 112.67-120.05h306.85Z" fill="#49484a"></path>
+        <path d="M914.95 300.7v222.29c0 122.59-94.08 222.35-209.75 222.35s-209.75-99.76-209.75-222.35V300.7h74.92v222.29c0 78.79 60.52 142.94 134.84 142.94s134.85-64.15 134.85-142.94V300.7h74.9Z" fill="#49484a"></path>
+        <path d="M1410.99 301.33v444.64l-74.92-60.98-269.68-220.42v281.4h-74.92V302.59l74.92 60.98 269.68 220.41V300.7z" fill="#49484a"></path>
+        <path d="M1696.67 301.33c115.69 0 209.77 99.09 209.77 221.66 0 54.63-18.58 104.82-49.75 143.57-3.59 4.45-7.81 8.89-11.98 13.33-37.76 40.66-89.9 65.44-147.45 65.44h-209.74V300.7l209.14.63Zm-134.83 365.23h134.83c74.32 0 134.86-64.16 134.86-142.93s-60.55-142.9-134.86-142.9h-134.83z" fill="#49484a"></path>
+        <path d="M3189.32 541.5h91.64v-91.56h-145.33c24.56-20.68 40.32-52.57 40.32-88.37 0-62.35-47.69-112.91-106.51-112.91s-106.5 50.56-106.5 112.91c0 35.8 15.77 67.69 40.3 88.37H2857.9l.07 91.56h91.61l-124.29 203.96h144.43c18.94-63.49 60.47-100.64 99.72-100.64s80.84 37.15 99.77 100.64h144.41L3189.33 541.5Z" fill="url(#fnd-g2)"></path>
+      </svg>
+    </a>
+    <nav class="nav-desktop" aria-label="Navegación principal">
+      <a href="#contexto" class="nav-link js-scroll">La emergencia</a>
+      <a href="#pilares" class="nav-link js-scroll">Cómo ayudamos</a>
+      <a href="#galeria" class="nav-link js-scroll">Galería</a>
+      <a href="#canales" class="nav-link js-scroll">Formas de donar</a>
+      <a href="#faq" class="nav-link js-scroll">Preguntas</a>
+    </nav>
+    <div class="header-actions">
+      <a href="https://www.gofundme.com/f/fundana-emergencia-venezuela/donate" target="_blank" rel="noopener" class="btn btn-primary btn-sm">Dona ahora</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú de navegación" aria-expanded="false" aria-controls="navMobile">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <nav class="nav-mobile" id="navMobile" aria-label="Navegación móvil">
+    <a href="#contexto" class="nav-link js-scroll">La emergencia</a>
+    <a href="#pilares" class="nav-link js-scroll">Cómo ayudamos</a>
+    <a href="#galeria" class="nav-link js-scroll">Galería</a>
+    <a href="#canales" class="nav-link js-scroll">Formas de donar</a>
+    <a href="#faq" class="nav-link js-scroll">Preguntas</a>
+    <a href="https://www.gofundme.com/f/fundana-emergencia-venezuela/donate" target="_blank" rel="noopener" class="btn btn-primary">Dona ahora →</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">
+    <img src="https://images.pexels.com/photos/6646924/pexels-photo-6646924.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Voluntarios distribuyendo agua e insumos a la comunidad" fetchpriority="high" width="1600" height="900">
+  </div>
+  <svg class="crack-svg" viewBox="0 0 400 600" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M320 0 L288 62 L312 98 L270 150 L296 196 L248 244 L268 300 L214 344 L232 400 L180 452 L198 510 L150 560 L160 600" stroke="#f1a627" stroke-width="2" stroke-linecap="round" stroke-opacity="0.7"/>
+  </svg>
+  <div class="hero-accent"></div>
+  <div class="wrap">
+    <div class="hero-inner">
+      <span class="eyebrow">Todos Somos Venezuela · Respuesta a la emergencia</span>
+      <h1>Después del sismo, la recuperación <em>recién empieza.</em></h1>
+      <p>La emergencia continúa y muchas familias siguen necesitando apoyo. Tu donación sostiene la atención psicosocial, la protección infantil y la entrega de insumos esenciales en las comunidades afectadas.</p>
+      <div class="hero-ctas">
+        <a href="https://www.gofundme.com/f/fundana-emergencia-venezuela/donate" target="_blank" rel="noopener" class="btn btn-primary btn-lg">Dona ahora →</a>
+        <a href="#pilares" class="btn btn-ghost btn-lg js-scroll">Ver cómo ayudamos</a>
+      </div>
+      <div class="trust-inline">
+        <span class="dot"></span> Fundana International · EIN #47-3170033
+        <span class="dot"></span> GlobalGiving Vetted Organization
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DONACIÓN -->
+<div class="donate-wrap" id="donacion">
+  <div class="wrap">
+    <div class="donate-card">
+      <div class="progress-box">
+        <div class="progress-head">
+          <span class="raised" id="raised">$0</span>
+          <span class="goal" id="goal">recaudados de $500K</span>
+        </div>
+        <div class="progress-track"><div class="progress-fill" id="fill"></div></div>
+        <div class="progress-meta">
+          <span><strong id="pct">0%</strong> de la meta</span>
+          <span><strong id="donors">0</strong> donaciones</span>
+        </div>
+        <p class="updated" id="updated">Campaña "Todos Somos Venezuela" en GoFundMe</p>
+      </div>
+      <div class="donate-action">
+        <h3>Elegí un monto y doná en segundos</h3>
+        <div class="amounts" id="amounts">
+          <button class="amount-chip" data-amt="10">$10</button>
+          <button class="amount-chip" data-amt="25">$25</button>
+          <button class="amount-chip active" data-amt="50">$50</button>
+          <button class="amount-chip" data-amt="100">$100</button>
+          <button class="amount-chip" data-amt="250">$250</button>
+          <button class="amount-chip" data-amt="0">Otro</button>
+        </div>
+        <a href="#" id="donateBtn" class="btn btn-primary btn-lg" target="_blank" rel="noopener">Donar $50 en GoFundMe →</a>
+        <p class="confirm-note">Confirmás el monto en el paso siguiente, dentro de GoFundMe.</p>
+        <div class="secure-note">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg>
+          Pago seguro vía GoFundMe · Deducible de impuestos
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTEXTO -->
+<section id="contexto" class="context-band">
+  <div class="wrap">
+    <div class="context-inner">
+      <span class="eyebrow">La situación hoy</span>
+      <h2>La ayuda debe seguir llegando</h2>
+      <p class="lead">Tras el evento sísmico, la recuperación va mucho más allá de reconstruir espacios físicos: implica acompañar a las personas en su proceso emocional y garantizar que cuenten con los recursos para afrontar esta nueva etapa.</p>
+      <p class="lead"><strong>La emergencia continúa</strong>, y este trabajo no termina cuando las noticias dejan de hablar del tema.</p>
+    </div>
+    <div class="cred-strip">
+      <div class="cred-item"><span class="cred-num">34</span><p>años de trabajo continuo en Venezuela</p></div>
+      <div class="cred-item"><span class="cred-num">+1.500</span><p>niños reintegrados a familias biológicas</p></div>
+      <div class="cred-item"><span class="cred-num">+700</span><p>niños acogidos en familias sustitutas</p></div>
+      <div class="cred-item"><span class="cred-num">+10.000</span><p>familias acompañadas con orientación y cuidado</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PILARES -->
+<section id="pilares" class="pad">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Nuestra respuesta</span>
+      <h2>Cuatro frentes de trabajo, una sola comunidad</h2>
+      <p>Así se distribuye el esfuerzo en terreno desde el sismo.</p>
+    </div>
+    <div class="pillars-grid">
+      <div class="pillar-card">
+        <div class="pillar-photo"><img loading="lazy" src="https://images.pexels.com/photos/6646933/pexels-photo-6646933.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Voluntarios conversando y acompañando a la comunidad" width="800" height="600"></div>
+        <div class="pillar-body"><span class="tag">Psicosocial</span><h3>Contención emocional</h3><p>Escucha y apoyo psicosocial para afrontar el impacto de la emergencia.</p></div>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-photo"><img loading="lazy" src="https://images.pexels.com/photos/6591161/pexels-photo-6591161.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Voluntaria con una caja de alimentos para entregar" width="800" height="600"></div>
+        <div class="pillar-body"><span class="tag">Alimentación</span><h3>Seguridad alimentaria</h3><p>Kits de alimentación entregados de forma continua a las familias afectadas.</p></div>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-photo"><img loading="lazy" src="https://images.pexels.com/photos/8087930/pexels-photo-8087930.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Niños sonriendo en un entorno protegido" width="800" height="600"></div>
+        <div class="pillar-body"><span class="tag">Infancia</span><h3>Protección de la infancia</h3><p>Espacios seguros que fortalecen el bienestar de niños, niñas y adolescentes.</p></div>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-photo"><img loading="lazy" src="https://images.pexels.com/photos/6646925/pexels-photo-6646925.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Entrega de agua potable a una persona" width="800" height="600"></div>
+        <div class="pillar-body"><span class="tag">WASH</span><h3>Agua e higiene</h3><p>Kits de higiene que ayudan a prevenir enfermedades en las comunidades.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALERIA -->
+<section id="galeria" class="pad section-alt">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">En terreno</span>
+      <h2>Así se ve la ayuda cuando llega</h2>
+      <p>Imágenes del trabajo de ayuda humanitaria en comunidad.</p>
+    </div>
+    <div class="gallery-grid">
+      <div class="g-item g1"><img loading="lazy" src="https://images.pexels.com/photos/6646967/pexels-photo-6646967.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Grupo de voluntarios en actividad comunitaria de ayuda" width="1200" height="900"><span class="g-cap">Ayuda que llega a la comunidad</span></div>
+      <div class="g-item g2"><img loading="lazy" src="https://images.pexels.com/photos/6647178/pexels-photo-6647178.jpeg?auto=compress&cs=tinysrgb&w=900" alt="Voluntarios cargando cajas de alimentos" width="900" height="600"><span class="g-cap">Entrega de alimentos</span></div>
+      <div class="g-item g3"><img loading="lazy" src="https://images.pexels.com/photos/6646878/pexels-photo-6646878.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Distribución de alimentos y medicinas" width="600" height="600"><span class="g-cap">Insumos esenciales</span></div>
+      <div class="g-item g4"><img loading="lazy" src="https://images.pexels.com/photos/6646914/pexels-photo-6646914.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Voluntarios entregando paquetes de ayuda" width="600" height="600"><span class="g-cap">En terreno</span></div>
+      <div class="g-item g5"><img loading="lazy" src="https://images.pexels.com/photos/6646992/pexels-photo-6646992.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Entrega de insumos y bebidas a la comunidad" width="600" height="600"><span class="g-cap">Acompañamiento</span></div>
+    </div>
+    <p class="gallery-note">Imágenes de referencia con licencia libre (Pexels). Reemplazables por fotos reales de Fundana desde Wix Media.</p>
+  </div>
+</section>
+
+<!-- TESTIMONIO -->
+<section class="pad">
+  <div class="wrap">
+    <div class="testimonial">
+      <span class="qm" aria-hidden="true">"</span>
+      <blockquote>Este espacio está reservado para una historia real de alguien acompañado durante la respuesta al sismo.</blockquote>
+      <cite>— A DEFINIR CON EL EQUIPO EN TERRENO, CON SU CONSENTIMIENTO</cite>
+    </div>
+  </div>
+</section>
+
+<!-- COSTO -->
+<section class="pad section-alt">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Transparencia</span>
+      <h2>A dónde va tu donación</h2>
+      <p>Una forma concreta de mostrar el impacto de cada aporte.</p>
+    </div>
+    <div class="cost-grid">
+      <div class="cost-card"><span class="cost-amount">$10</span><p>Puede cubrir un kit de higiene personal para una familia.</p></div>
+      <div class="cost-card"><span class="cost-amount">$25</span><p>Puede cubrir un día de atención psicosocial para un grupo de niños.</p></div>
+      <div class="cost-card"><span class="cost-amount">$50</span><p>Puede cubrir un kit de alimentación completo para una familia.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- MÁS FORMAS DE DONAR -->
+<section id="canales" class="pad">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Más formas de donar</span>
+      <h2>Elegí el canal que más te convenga</h2>
+      <p>La forma más rápida es GoFundMe, pero también podés aportar directo por billetera digital o transferencia bancaria, dentro y fuera de Venezuela.</p>
+    </div>
+
+    <div class="channels-grid">
+      <button class="channel-card" data-copy="fundanazelle@gmail.com" aria-label="Copiar dato de Zelle: fundanazelle@gmail.com">
+        <span class="channel-top">
+          <span class="channel-label">Zelle</span>
+          <svg class="channel-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+        </span>
+        <span class="channel-handle">fundanazelle@gmail.com</span>
+        <span class="channel-hint">Tocá para copiar</span>
+      </button>
+      <button class="channel-card" data-copy="@Fundana-Venezuela" aria-label="Copiar dato de Venmo: @Fundana-Venezuela">
+        <span class="channel-top">
+          <span class="channel-label">Venmo</span>
+          <svg class="channel-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+        </span>
+        <span class="channel-handle">@Fundana-Venezuela</span>
+        <span class="channel-hint">Tocá para copiar</span>
+      </button>
+      <button class="channel-card" data-copy="fundanainternational@gmail.com" aria-label="Copiar dato de PayPal: fundanainternational@gmail.com">
+        <span class="channel-top">
+          <span class="channel-label">PayPal</span>
+          <svg class="channel-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+        </span>
+        <span class="channel-handle">fundanainternational@gmail.com</span>
+        <span class="channel-hint">Tocá para copiar</span>
+      </button>
+    </div>
+
+    <div class="bank-accordion">
+      <details>
+        <summary>Transferencias dentro de Venezuela</summary>
+        <div class="bank-block">
+          <dl>
+            <div><dt>Banco</dt><dd>Banesco Banco Universal</dd></div>
+            <div><dt>Titular</dt><dd>Fund. Amigos del niño que amerita protección</dd></div>
+            <div><dt>Cuenta</dt><dd>0134 0176 48 17630 06820 <button class="copy-mini" data-copy="01340176481763006820" aria-label="Copiar número de cuenta">Copiar</button></dd></div>
+            <div><dt>RIF</dt><dd>J-30044432-5</dd></div>
+          </dl>
+        </div>
+      </details>
+      <details>
+        <summary>Transferencias desde el exterior</summary>
+        <div class="bank-block">
+          <h4>Banesco Internacional · Panamá</h4>
+          <dl>
+            <div><dt>Titular</dt><dd>Banco Banesco Panamá, S.A.</dd></div>
+            <div><dt>Cuenta</dt><dd>221021917938 <button class="copy-mini" data-copy="221021917938" aria-label="Copiar número de cuenta">Copiar</button></dd></div>
+            <div><dt>Swift (BIC)</dt><dd>BANSPAPA <button class="copy-mini" data-copy="BANSPAPA" aria-label="Copiar código Swift">Copiar</button></dd></div>
+            <div><dt>Dirección</dt><dd>Av. Aquilino de la Guardia y Calle 47, Torre Banesco. Apartado 0823-05799, Panamá</dd></div>
+          </dl>
+          <h4>Regions Bank · Estados Unidos</h4>
+          <dl>
+            <div><dt>Titular</dt><dd>Fundana International Corp.</dd></div>
+            <div><dt>Cuenta</dt><dd>0246649360 <button class="copy-mini" data-copy="0246649360" aria-label="Copiar número de cuenta">Copiar</button></dd></div>
+            <div><dt>ABA Routing</dt><dd>062005690 <button class="copy-mini" data-copy="062005690" aria-label="Copiar routing">Copiar</button></dd></div>
+            <div><dt>Swift</dt><dd>UPNBUS44MIA <button class="copy-mini" data-copy="UPNBUS44MIA" aria-label="Copiar código Swift">Copiar</button></dd></div>
+          </dl>
+        </div>
+      </details>
+    </div>
+
+    <div class="notify-note">
+      <strong>¿Donaste por transferencia?</strong> Avisanos a <a href="mailto:donacion@fundana.org" style="color:var(--orange-deep);font-weight:700;">donacion@fundana.org</a> con el número y la fecha del depósito para poder confirmarte la recepción.
+    </div>
+
+    <p class="tax-note">Fundana es una entidad de atención registrada ante el Consejo Municipal de Derechos de Niños, Niñas y Adolescentes. Las donaciones a su favor son deducibles del ISLR en Venezuela con el doble del porcentaje establecido en el art. 27 de la Ley de ISLR (normativa tributaria avalada por PwC Venezuela). En Estados Unidos, los aportes a Fundana International (EIN #47-3170033) son deducibles de impuestos.</p>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section class="pad" style="padding-top:0;">
+  <div class="wrap">
+    <div class="cta-banner">
+      <div>
+        <h3>Cada aporte extiende cuánto tiempo podemos seguir presentes.</h3>
+        <div class="share-row">
+          <button data-share="whatsapp" aria-label="Compartir en WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.7-.8-1.9-.9-.3-.1-.4-.1-.6.1-.2.3-.7.9-.8 1-.2.2-.3.2-.6.1-1.5-.8-2.5-1.4-3.5-3.1-.3-.5.3-.4.8-1.4.1-.2 0-.3 0-.5s-.6-1.5-.9-2c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.8.8-1 1.9-.6 3.1.5 1.4 1.4 2.7 2.6 3.8 1.7 1.5 3.1 2 4.9 2.1.6 0 1.1-.1 1.5-.5.4-.4.5-1 .4-1.1-.1-.2-.3-.2-.6-.4zM12 2a10 10 0 00-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1012 2zm0 18.3c-1.5 0-3-.4-4.3-1.2l-.3-.2-2.9.8.8-2.8-.2-.3A8.3 8.3 0 1112 20.3z"/></svg></button>
+          <button data-share="facebook" aria-label="Compartir en Facebook"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 22v-8h2.7l.4-3H13V9c0-.9.3-1.5 1.6-1.5H16V4.9c-.3 0-1.2-.1-2.3-.1-2.3 0-3.7 1.4-3.7 3.9V11H7.5v3H10v8h3z"/></svg></button>
+          <button data-share="x" aria-label="Compartir en X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.2 2h3.3l-7.2 8.2L22.7 22h-6.6l-5.2-6.8L4.9 22H1.6l7.7-8.8L1.3 2H8l4.7 6.2L18.2 2zm-1.2 18h1.8L7.1 3.9H5.2L17 20z"/></svg></button>
+          <button data-share="copy" aria-label="Copiar enlace"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10 13a5 5 0 007 0l3-3a5 5 0 00-7-7l-1 1"/><path d="M14 11a5 5 0 00-7 0l-3 3a5 5 0 007 7l1-1"/></svg></button>
+        </div>
+      </div>
+      <a href="https://www.gofundme.com/f/fundana-emergencia-venezuela/donate" target="_blank" rel="noopener" class="btn btn-lg">Dona ahora →</a>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAND -->
+<section class="pad" style="padding:0 0 clamp(56px,8vw,84px);">
+  <div class="wrap">
+    <div class="trust-band">
+      <div class="trust-item"><img class="badge-img" loading="lazy" src="https://static.wixstatic.com/media/957676_8f166d94379f4754acd14a73e3afa86b~mv2.png" alt="Sello GlobalGiving Vetted" width="42" height="42"> GlobalGiving Vetted Organization</div>
+      <div class="trust-item"><img class="badge-img" loading="lazy" src="https://static.wixstatic.com/media/957676_455191fa342047c38505159eaa9f0596~mv2.png" alt="Sello GlobalGiving Top Ranked" width="42" height="42"> GlobalGiving Top Ranked Organization</div>
+      <div class="trust-item">Fundana International — EIN #47-3170033</div>
+      <div class="trust-item">Fundana Venezuela — RIF J-30044432-5</div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="pad section-alt">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Antes de donar</span>
+      <h2>Preguntas frecuentes</h2>
+    </div>
+    <div class="faq-list">
+      <details open><summary>¿A dónde va exactamente mi donación?</summary><p>Directo a Fundana en Venezuela: atención psicosocial, protección infantil, alimentación y kits de higiene para las comunidades afectadas por el sismo, a través de los programas y equipos ya presentes en terreno.</p></details>
+      <details><summary>¿Es deducible de impuestos?</summary><p>Sí, en ambos países. En Estados Unidos la campaña beneficia a Fundana International (EIN #47-3170033), organización sin fines de lucro. En Venezuela, por ser Fundana una entidad de atención registrada, las donaciones son deducibles del ISLR con el doble del porcentaje del art. 27 de la Ley de ISLR (normativa avalada por PwC Venezuela).</p></details>
+      <details><summary>¿Es seguro donar a través de GoFundMe?</summary><p>Sí — GoFundMe procesa el pago de forma segura, y Fundana es una organización con 34 años de trayectoria, aliada de UNICEF y verificada por GlobalGiving.</p></details>
+      <details><summary>¿Puedo colaborar de otra forma además de donar dinero?</summary><p>Sí, podés sumarte como voluntario o compartir la campaña. El alcance también ayuda a llegar a más familias.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="pad final-cta">
+  <div class="wrap">
+    <span class="eyebrow">Todavía hay tiempo de ayudar</span>
+    <h2 style="margin-top:14px;">Tu aporte, sin importar el tamaño, hace la diferencia.</h2>
+    <div class="hero-ctas">
+      <a href="https://www.gofundme.com/f/fundana-emergencia-venezuela/donate" target="_blank" rel="noopener" class="btn btn-primary btn-lg">Dona ahora →</a>
+      <button class="btn btn-outline btn-lg" data-share="copy">Compartir campaña</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="f-col">
+      <strong>Fundana</strong>
+      Av. Rio de Janeiro, Las Villas de los Chiquiticos,<br>Caurimare, Caracas, Venezuela.
+    </div>
+    <div class="f-col">
+      <strong>Contacto</strong>
+      <a href="mailto:info@fundana.org">info@fundana.org</a>
+      <a href="tel:+582122575670">+58-212-2575670 / 2579110</a>
+      <a href="https://instagram.com/fundana_fundacion" target="_blank" rel="noopener">@fundana_fundacion</a>
+    </div>
+    <div class="f-col">
+      <strong>Legal</strong>
+      Fundana International — EIN #47-3170033<br>
+      Fundana Venezuela — RIF J-30044432-5
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast">Enlace copiado</div>
+
+<script>
+  // ===== CONFIG — actualizar para refrescar la campaña =====
+  const CAMPAIGN = {
+    url: "https://www.gofundme.com/f/fundana-emergencia-venezuela",
+    donateUrl: "https://www.gofundme.com/f/fundana-emergencia-venezuela/donate",
+    // Endpoint que lee el total en vivo (Netlify Function). Si falla o está vacío,
+    // se usan los valores de respaldo de abajo. Poné aquí la URL real de tu deploy.
+    // Endpoints que leen el total en vivo (Netlify Function). Se prueban en orden:
+    // 1º la RELATIVA (funciona cuando el sitio se sirve desde Netlify, sin importar el nombre)
+    // 2º la ABSOLUTA (funciona cuando el HTML está embebido en Wix — ajustá el dominio si difiere)
+    liveUrls: [
+      "/.netlify/functions/gofundme-total",
+      "https://todos-somos-venezuela.netlify.app/.netlify/functions/gofundme-total"
+    ],
+    raised: 135475,   // USD recaudados (respaldo / último conocido)
+    goal: 500000,     // USD meta (respaldo)
+    donors: 1268,     // donaciones (respaldo)
+    updated: "17 jul 2026"
+  };
+  // =========================================================
+
+  const fmtUSD = n => "$" + n.toLocaleString("en-US");
+  const fmtGoal = n => n >= 1000 ? "$" + Math.round(n/1000) + "K" : "$" + n;
+
+  // Datos vigentes (arrancan con el respaldo, se pisan si llega el dato en vivo)
+  let DATA = { raised: CAMPAIGN.raised, goal: CAMPAIGN.goal, donors: CAMPAIGN.donors };
+  const pctOf = d => Math.min(100, Math.round(d.raised / d.goal * 100));
+
+  const raisedEl = document.getElementById("raised");
+  const goalEl   = document.getElementById("goal");
+  const donorsEl = document.getElementById("donors");
+  const pctEl    = document.getElementById("pct");
+  const fillEl   = document.getElementById("fill");
+  const updatedEl= document.getElementById("updated");
+
+  goalEl.textContent = "recaudados de " + fmtGoal(DATA.goal);
+  updatedEl.textContent = 'Campaña "Todos Somos Venezuela" en GoFundMe · actualizado ' + CAMPAIGN.updated;
+
+  // ---- auto-resize del iframe para Wix ----
+  function postHeight(){
+    const h = Math.ceil(document.body.getBoundingClientRect().height);
+    try{ window.parent.postMessage({type:'fundana-height', height:h}, '*'); }catch(e){}
+  }
+  window.addEventListener('load', ()=>{ postHeight(); setTimeout(postHeight,400); });
+  window.addEventListener('resize', postHeight);
+  if(document.fonts && document.fonts.ready){ document.fonts.ready.then(postHeight); }
+  document.querySelectorAll('details').forEach(d=>d.addEventListener('toggle', ()=>setTimeout(postHeight,10)));
+
+  // ---- animación de progreso + contadores ----
+  function animateNumber(el, target, fmt, dur=1400){
+    const start = performance.now();
+    (function step(now){
+      const p = Math.min(1,(now-start)/dur);
+      el.textContent = fmt(Math.round(target*(1-Math.pow(1-p,3))));
+      if(p<1) requestAnimationFrame(step); else postHeight();
+    })(start);
+  }
+  let revealed = false;
+  function reveal(){                       // primera aparición (con animación)
+    if(revealed) return; revealed = true;
+    goalEl.textContent = "recaudados de " + fmtGoal(DATA.goal);
+    animateNumber(raisedEl, DATA.raised, fmtUSD);
+    animateNumber(donorsEl, DATA.donors, n=>n.toLocaleString("es"));
+    animateNumber(pctEl, pctOf(DATA), n=>n+"%");
+    fillEl.style.width = pctOf(DATA) + "%";
+  }
+  function setInstant(){                    // actualización posterior (sin re-animar de 0)
+    goalEl.textContent = "recaudados de " + fmtGoal(DATA.goal);
+    raisedEl.textContent = fmtUSD(DATA.raised);
+    donorsEl.textContent = DATA.donors.toLocaleString("es");
+    pctEl.textContent = pctOf(DATA) + "%";
+    fillEl.style.width = pctOf(DATA) + "%";   // la barra desliza por su transición CSS
+    postHeight();
+  }
+  const mod = document.getElementById("donacion");
+  if('IntersectionObserver' in window){
+    const io = new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){reveal();io.disconnect();}});},{threshold:0.35});
+    io.observe(mod);
+  }
+  window.addEventListener('load', ()=>setTimeout(reveal, 1200)); // fallback
+
+  // ---- dato EN VIVO desde GoFundMe (vía Netlify Function) ----
+  async function fetchLive(urls){
+    for(const u of urls){
+      try{
+        const r = await fetch(u, { cache: "no-store" });
+        if(r.ok){
+          const j = await r.json();
+          if(j && j.ok && j.raised > 0) return j;
+        }
+      }catch(e){ /* probar siguiente URL */ }
+    }
+    return null;
+  }
+  if(CAMPAIGN.liveUrls && CAMPAIGN.liveUrls.length){
+    fetchLive(CAMPAIGN.liveUrls).then(j => {
+      if(j){
+        DATA = {
+          raised: j.raised,
+          goal:   j.goal   > 0 ? j.goal   : DATA.goal,
+          donors: j.donors > 0 ? j.donors : DATA.donors
+        };
+        if(revealed) setInstant();          // ya se mostró → lo actualizo al valor real
+        const hoy = new Date().toLocaleDateString("es", {day:"numeric", month:"short", year:"numeric"});
+        updatedEl.textContent = "Actualizado automáticamente desde GoFundMe · " + hoy;
+      }
+      // si j es null → queda el número de respaldo (la función no respondió)
+    });
+  }
+
+  // ---- selector de montos ----
+  let selected = 50;
+  const btn = document.getElementById("donateBtn");
+  function updateBtn(){
+    btn.textContent = selected>0 ? "Donar $"+selected+" en GoFundMe →" : "Ir a donar en GoFundMe →";
+    // NOTA: el GoFundMe de consumidor (/f/) NO permite pre-cargar el monto por URL.
+    // El parámetro ?amount= solo funciona en GoFundMe Pro / Classy. Por eso el
+    // enlace va al flujo de donación normal y el monto se confirma en GoFundMe.
+    btn.href = CAMPAIGN.donateUrl;
+  }
+  document.querySelectorAll(".amount-chip").forEach(chip=>{
+    chip.addEventListener("click", ()=>{
+      document.querySelectorAll(".amount-chip").forEach(c=>c.classList.remove("active"));
+      chip.classList.add("active");
+      selected = parseInt(chip.dataset.amt,10);
+      updateBtn();
+    });
+  });
+  updateBtn();
+
+  // ---- navegación: menú móvil + scroll suave + sombra de header ----
+  const navMobile = document.getElementById('navMobile');
+  const navToggle = document.getElementById('navToggle');
+  function closeMenu(){
+    navMobile.classList.remove('open');
+    navToggle.setAttribute('aria-expanded','false');
+    navToggle.setAttribute('aria-label','Abrir menú de navegación');
+    setTimeout(postHeight,10);
+  }
+  navToggle.addEventListener('click', ()=>{
+    const open = navMobile.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', open?'true':'false');
+    navToggle.setAttribute('aria-label', open?'Cerrar menú de navegación':'Abrir menú de navegación');
+    setTimeout(postHeight,10);
+  });
+  document.querySelectorAll('.js-scroll').forEach(a=>{
+    a.addEventListener('click', e=>{
+      const href = a.getAttribute('href');
+      const t = href && document.querySelector(href);
+      if(t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth', block:'start'}); }
+      if(navMobile.classList.contains('open')) closeMenu();
+    });
+  });
+  const header = document.getElementById('top');
+  window.addEventListener('scroll', ()=>{ header.classList.toggle('scrolled', window.scrollY>4); }, {passive:true});
+
+  // ---- cerrar banner de propuesta ----
+  const pbClose = document.getElementById('pbClose');
+  if(pbClose){ pbClose.addEventListener('click', ()=>{ document.getElementById('proposalBar').classList.add('hidden'); setTimeout(postHeight,10); }); }
+
+  // ---- copiado robusto (funciona dentro de iframes de Wix) ----
+  function fallbackCopy(text){
+    try{
+      const ta=document.createElement('textarea');
+      ta.value=text;
+      ta.setAttribute('readonly','');
+      ta.style.position='fixed'; ta.style.top='0'; ta.style.left='0';
+      ta.style.width='1px'; ta.style.height='1px'; ta.style.opacity='0';
+      document.body.appendChild(ta);
+      const isIOS=/ipad|iphone|ipod/i.test(navigator.userAgent);
+      if(isIOS){
+        const range=document.createRange(); range.selectNodeContents(ta);
+        const sel=window.getSelection(); sel.removeAllRanges(); sel.addRange(range);
+        ta.setSelectionRange(0,999999);
+      } else { ta.focus(); ta.select(); }
+      let ok=false; try{ ok=document.execCommand('copy'); }catch(e){ ok=false; }
+      document.body.removeChild(ta);
+      return ok;
+    }catch(e){ return false; }
+  }
+  async function copyText(text){
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      try{ await navigator.clipboard.writeText(text); return true; }catch(e){ /* iframe bloqueado → fallback */ }
+    }
+    return fallbackCopy(text);
+  }
+
+  // ---- compartir ----
+  const shareText = "Ayudá a las familias afectadas por el sismo en Venezuela. Todos Somos Venezuela — Fundana.";
+  const shareUrl = CAMPAIGN.url;
+  function toast(msg){ const t=document.getElementById("toast"); t.textContent=msg; t.classList.add("show"); setTimeout(()=>t.classList.remove("show"),2200); }
+  document.querySelectorAll("[data-share]").forEach(b=>{
+    b.addEventListener("click", async ()=>{
+      const type=b.dataset.share, u=encodeURIComponent(shareUrl), t=encodeURIComponent(shareText);
+      if(type==="whatsapp") window.open("https://wa.me/?text="+t+"%20"+u,"_blank","noopener");
+      else if(type==="facebook") window.open("https://www.facebook.com/sharer/sharer.php?u="+u,"_blank","noopener");
+      else if(type==="x") window.open("https://twitter.com/intent/tweet?text="+t+"&url="+u,"_blank","noopener");
+      else if(type==="copy"){ const ok=await copyText(shareUrl); toast(ok?"Enlace copiado":("Copiá: "+shareUrl)); }
+    });
+  });
+
+  // ---- copiar datos de canales de donación ----
+  document.querySelectorAll("[data-copy]").forEach(b=>{
+    b.addEventListener("click", async ()=>{
+      const val = b.dataset.copy;
+      const ok = await copyText(val);
+      toast(ok ? ("Copiado: "+val) : ("Copiá: "+val));
+      const hint = b.querySelector(".channel-hint");
+      if(hint){
+        const original = hint.textContent;
+        hint.textContent = ok ? "✓ ¡Copiado!" : "Mantené presionado para copiar";
+        b.classList.add("copied");
+        setTimeout(()=>{ hint.textContent = original; b.classList.remove("copied"); }, 1800);
+      }
+    });
+  });
+
+</script>
+
+</body>
+</html>

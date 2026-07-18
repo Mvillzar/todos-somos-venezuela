@@ -1,0 +1,21 @@
+# ============================================================================
+# Netlify · Fundana · Todos Somos Venezuela
+# ============================================================================
+
+[build]
+  publish = "."
+  # No hace falta comando de build: Netlify instala las dependencias de
+  # package.json y empaqueta las funciones automaticamente.
+
+[build.environment]
+  NODE_VERSION = "20"
+
+[functions]
+  node_bundler = "esbuild"
+  # Chromium no se debe empaquetar con esbuild: se marca como externo para que
+  # su binario viaje intacto dentro de la funcion.
+  external_node_modules = ["@sparticuz/chromium"]
+
+# Funcion programada: actualiza el total cada 15 minutos.
+[functions."update-total"]
+  schedule = "*/15 * * * *"
