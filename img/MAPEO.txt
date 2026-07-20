@@ -1,0 +1,13 @@
+FUNDANA · Fotos para el repo (carpeta img/)
+===========================================
+ARCHIVO      → ESPACIO                          → original del Drive
+hero.jpg     → Hero (fondo con título)          → A7403945
+pilar1.jpg   → Pilar 1 (Contención emocional)    → 4-DSC_4578
+pilar2.jpg   → Pilar 2 (Seguridad alimentaria)   → A7403921
+pilar3.jpg   → Pilar 3 (Protección de infancia)  → A7403900
+pilar4.jpg   → Pilar 4 (Agua e higiene)          → A7403905
+g1.jpg       → Galería 1                          → DSC00029
+g2.jpg       → Galería 2                          → 14-_DSC4590
+g3.jpg       → Galería 3                          → DSC00021
+g4.jpg       → Galería 4                          → DSC00042
+g5.jpg       → Galería 5                          → DSC00035
